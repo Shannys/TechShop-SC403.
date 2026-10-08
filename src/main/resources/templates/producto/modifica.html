@@ -1,0 +1,18 @@
+<!doctype html><html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{general/fragmentos :: head('Editar producto')}"></head>
+<body class="d-flex flex-column min-vh-100"><nav th:replace="~{general/fragmentos :: header}"></nav>
+<main class="container py-5 flex-grow-1"><div class="col-lg-8 mx-auto">
+<h1 class="h2 mb-4" th:text="${producto.idProducto == null} ? 'Nuevo producto' : 'Modificar producto'"></h1>
+<div th:if="${error}" class="alert alert-danger" th:text="${error}"></div>
+<form class="card card-body shadow-sm border-0 p-4" th:action="@{/producto/guardar}" th:object="${producto}" method="post">
+<input type="hidden" th:field="*{idProducto}">
+<div class="row g-3">
+<div class="col-12"><label class="form-label">Descripción</label><input class="form-control" th:field="*{descripcion}" maxlength="100" required><div class="small text-danger" th:errors="*{descripcion}"></div></div>
+<div class="col-md-6"><label class="form-label">Precio (₡)</label><input class="form-control" type="number" th:field="*{precio}" min="0.01" step="0.01" required><div class="small text-danger" th:errors="*{precio}"></div></div>
+<div class="col-md-6"><label class="form-label">Existencias</label><input class="form-control" type="number" th:field="*{existencias}" min="0" required><div class="small text-danger" th:errors="*{existencias}"></div></div>
+<div class="col-12"><label class="form-label">Categoría</label><select class="form-select" th:field="*{idCategoria}" required>
+<option value="">Seleccione una categoría...</option><option th:each="c : ${categorias}" th:value="${c.idCategoria}" th:text="${c.descripcion}"></option></select><div class="small text-danger" th:errors="*{idCategoria}"></div></div>
+<div class="col-12"><label class="form-label">URL de imagen (opcional)</label><input class="form-control" type="url" th:field="*{rutaImagen}" placeholder="https://ejemplo.com/foto.jpg"></div>
+<div class="col-12"><div class="form-check form-switch"><input class="form-check-input" type="checkbox" th:field="*{activo}"><label class="form-check-label">Producto activo</label></div></div>
+<div class="col-12 d-flex gap-2"><button class="btn btn-primary" type="submit">Guardar</button><a class="btn btn-outline-secondary" th:href="@{/producto/listado}">Cancelar</a></div>
+</div></form></div></main><footer th:replace="~{general/fragmentos :: footer}"></footer></body></html>

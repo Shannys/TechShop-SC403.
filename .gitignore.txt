@@ -1,0 +1,6 @@
+target/
+nbproject/private/
+.idea/
+*.class
+*.log
+.env

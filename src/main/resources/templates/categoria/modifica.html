@@ -1,0 +1,14 @@
+<!doctype html><html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{general/fragmentos :: head('Editar categoría')}"></head>
+<body class="d-flex flex-column min-vh-100"><nav th:replace="~{general/fragmentos :: header}"></nav>
+<main class="container py-5 flex-grow-1"><div class="col-lg-7 mx-auto">
+<h1 class="h2 mb-4" th:text="${categoria.idCategoria == null} ? 'Nueva categoría' : 'Modificar categoría'"></h1>
+<form class="card card-body shadow-sm border-0 p-4" th:action="@{/categoria/guardar}" th:object="${categoria}" method="post">
+<input type="hidden" th:field="*{idCategoria}"><div class="mb-3">
+<label class="form-label">Descripción</label><input class="form-control" th:field="*{descripcion}" maxlength="50" required>
+<div class="text-danger small" th:errors="*{descripcion}"></div></div>
+<div class="mb-3"><label class="form-label">URL de imagen (opcional)</label><input type="url" class="form-control" th:field="*{rutaImagen}" placeholder="https://ejemplo.com/imagen.jpg"></div>
+<div class="form-check form-switch mb-4"><input class="form-check-input" type="checkbox" th:field="*{activo}"><label class="form-check-label">Categoría activa</label></div>
+<div class="d-flex gap-2"><button class="btn btn-primary" type="submit">Guardar</button>
+<a class="btn btn-outline-secondary" th:href="@{/categoria/listado}">Cancelar</a></div></form></div></main>
+<footer th:replace="~{general/fragmentos :: footer}"></footer></body></html>

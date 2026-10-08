@@ -1,0 +1,21 @@
+<!doctype html><html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{general/fragmentos :: head('Productos')}"></head>
+<body class="d-flex flex-column min-vh-100"><nav th:replace="~{general/fragmentos :: header}"></nav>
+<div th:replace="~{general/fragmentos :: avisos}"></div>
+<main class="container py-4 flex-grow-1">
+<div class="d-flex flex-wrap justify-content-between align-items-center mb-4 gap-2">
+ <div><h1 class="h2 mb-1">Productos</h1><p class="text-muted mb-0">Administración de inventario</p></div>
+ <a class="btn btn-primary" th:href="@{/producto/nuevo}">+ Agregar producto</a></div>
+<div class="card border-0 shadow-sm"><div class="table-responsive">
+<table class="table table-hover align-middle mb-0"><thead class="table-light">
+<tr><th>ID</th><th>Producto</th><th>Precio</th><th>Existencias</th><th>Categoría</th><th>Estado</th><th>Acciones</th></tr></thead>
+<tbody><tr th:each="p : ${productos}">
+<td th:text="${p.idProducto}"></td><td th:text="${p.descripcion}"></td>
+<td th:text="'₡' + ${#numbers.formatDecimal(p.precio, 1, 'COMMA', 2, 'POINT')}"></td>
+<td th:text="${p.existencias}"></td>
+<td><span th:each="c : ${categorias}" th:if="${c.idCategoria == p.idCategoria}" th:text="${c.descripcion}"></span></td>
+<td><span class="badge" th:classappend="${p.activo} ? 'text-bg-success' : 'text-bg-secondary'" th:text="${p.activo} ? 'Activo' : 'Inactivo'"></span></td>
+<td><div class="d-flex gap-2"><a class="btn btn-sm btn-outline-primary" th:href="@{/producto/modifica/{id}(id=${p.idProducto})}">Modificar</a>
+<form method="post" th:action="@{/producto/eliminar/{id}(id=${p.idProducto})}" onsubmit="return confirm('¿Eliminar este producto?');"><button class="btn btn-sm btn-outline-danger">Eliminar</button></form></div></td></tr>
+<tr th:if="${#lists.isEmpty(productos)}"><td colspan="7">No hay productos.</td></tr></tbody></table></div></div>
+</main><footer th:replace="~{general/fragmentos :: footer}"></footer></body></html>
